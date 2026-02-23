@@ -5,8 +5,34 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # ~~~
-cmake_minimum_required(VERSION 3.22.1)
+cmake_minimum_required(VERSION 4.1.0)
 
+#E:\Development\Vcpkg G:\Vcpkg\scripts\buildsystems
+set(CMAKE_TOOLCHAIN_FILE "E:/Development/Vcpkg/scripts/buildsystems/vcpkg.cmake")
+if(WIN32)
+    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/source-charset:utf-8>")
+    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/source-charset:utf-8>")
+endif()
+set(CMAKE_CXX_STANDARD 23)
+
+set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
+message(STATUS "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
+
+set(CMAKE_CXX_MODULE_STD 1)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# 启用C++20 Modules支持
+set(CMAKE_CXX_SCAN_FOR_MODULES ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_EXTENSIONS ON)
+set(VCPKG_FEATURE_FLAGS "version")
+set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "d0edc3af-4c50-42ea-a356-e2862fe7a444")
+# ==============================================================================
+
+#E:\vs2026\VC\Tools\MSVC\14.50.35717\modules
+set(LIBCXX_MODULE_DIRS "E:/vs2026/VC/Tools/MSVC/14.50.35717/modules")
+
+message(STATUS "MSVC: 启用 UTF-8 编码支持 (/utf-8)")
 include(CMakeDependentOption)
 
 
@@ -44,7 +70,8 @@ project(VULKAN_HEADERS LANGUAGES C CXX VERSION ${VK_VERSION_STRING})
 # options for Vulkan-Headers and the Vulkan-Hpp C++20 module
 option(VULKAN_HEADERS_ENABLE_TESTS "Test Vulkan-Headers" ${PROJECT_IS_TOP_LEVEL})
 option(VULKAN_HEADERS_ENABLE_INSTALL "Install Vulkan-Headers" ${PROJECT_IS_TOP_LEVEL})
-cmake_dependent_option(VULKAN_HEADERS_ENABLE_MODULE "Build and install the Vulkan-Hpp C++20 module" ON [[TARGET __CMAKE::CXX23]] OFF)
+option(VULKAN_HEADERS_ENABLE_MODULE "Build and install the Vulkan-Hpp C++20 module" ON)
+#cmake_dependent_option(VULKAN_HEADERS_ENABLE_MODULE "Build and install the Vulkan-Hpp C++20 module" ON [[TARGET __CMAKE::CXX23]] OFF)
 # This CMake target is only available when the entire stack (CMake, compiler, standard library) supports C++20 modules and supports importing the standard library as a module.
 # See https://gitlab.kitware.com/ben.boeckel/cmake/-/blob/cxxmodules-docs/Help/manual/cmake-cxxmodules.7.rst?ref_type=heads&plain=1#L398
 
@@ -75,6 +102,8 @@ if (VULKAN_HEADERS_ENABLE_MODULE)
     set_target_properties(Vulkan-Module PROPERTIES
         DEPRECATION "The Vulkan-Module and Vulkan::Module targets have been deprecated by the Vulkan-HppModule and Vulkan::HppModule targets respectively and will be removed at a future date."
     )
+else ()
+    message(STATUS "VULKAN_HEADERS_ENABLE_MODULE = OFF 777777777777777777")
 endif()
 
 if (VULKAN_HEADERS_ENABLE_TESTS)
