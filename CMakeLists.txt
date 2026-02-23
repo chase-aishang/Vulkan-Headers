@@ -73,7 +73,7 @@ target_include_directories(Vulkan-Headers INTERFACE $<BUILD_INTERFACE:${CMAKE_CU
 message(STATUS "VULKAN_HEADERS_ENABLE_MODULE = ${VULKAN_HEADERS_ENABLE_MODULE}")
 if (VULKAN_HEADERS_ENABLE_MODULE)
     message(STATUS "VULKAN_HEADERS_ENABLE_MODULE = ON 6666666666666")
-    add_library(Vulkan-HppModule OBJECT)
+    add_library(Vulkan-HppModule STATIC)
     add_library(Vulkan::HppModule ALIAS Vulkan-HppModule)
     target_sources(Vulkan-HppModule PUBLIC
         FILE_SET CXX_MODULES
@@ -110,6 +110,7 @@ if (VULKAN_HEADERS_ENABLE_INSTALL)
     # This ensures that the module interface files are only installed once.
     if(VULKAN_HEADERS_ENABLE_MODULE)
         set(CPPM_PATTERN "*.cppm")
+        message(STATUS "VULKAN_HEADERS_ENABLE_MODULE = ON install")
     else()
         set(CPPM_PATTERN "")
     endif()
@@ -126,14 +127,16 @@ if (VULKAN_HEADERS_ENABLE_INSTALL)
 
     # Install the C++ module target and export it
     if (VULKAN_HEADERS_ENABLE_MODULE)
+        message(STATUS "VULKAN_HEADERS_ENABLE_MODULE = ON VULKAN_HEADERS_ENABLE_MODULE")
         set_target_properties(Vulkan-HppModule PROPERTIES EXPORT_NAME "HppModule")
         install(TARGETS Vulkan-HppModule
             EXPORT VulkanHeadersConfig
-            FILE_SET CXX_MODULES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+            RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+            ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}")
         install(EXPORT VulkanHeadersConfig
             NAMESPACE "Vulkan::"
-            DESTINATION "share/cmake/VulkanHeaders"
-            CXX_MODULES_DIRECTORY "")
+            DESTINATION "share/cmake/VulkanHeaders")
     else()
         install(EXPORT VulkanHeadersConfig
             NAMESPACE "Vulkan::"
