@@ -52,8 +52,9 @@ cmake_dependent_option(VULKAN_HEADERS_ENABLE_MODULE "Build and install the Vulka
 add_library(Vulkan-Headers INTERFACE)
 add_library(Vulkan::Headers ALIAS Vulkan-Headers)
 target_include_directories(Vulkan-Headers INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
-
+message(STATUS "VULKAN_HEADERS_ENABLE_MODULE = ${VULKAN_HEADERS_ENABLE_MODULE}")
 if (VULKAN_HEADERS_ENABLE_MODULE)
+    message(STATUS "VULKAN_HEADERS_ENABLE_MODULE = ON 6666666666666")
     add_library(Vulkan-HppModule OBJECT)
     add_library(Vulkan::HppModule ALIAS Vulkan-HppModule)
     target_sources(Vulkan-HppModule PUBLIC
