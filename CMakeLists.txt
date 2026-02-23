@@ -9,10 +9,7 @@ cmake_minimum_required(VERSION 4.1.0)
 
 #E:\Development\Vcpkg G:\Vcpkg\scripts\buildsystems
 set(CMAKE_TOOLCHAIN_FILE "E:/Development/Vcpkg/scripts/buildsystems/vcpkg.cmake")
-if(WIN32)
-    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/source-charset:utf-8>")
-    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/source-charset:utf-8>")
-endif()
+
 set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
@@ -31,8 +28,6 @@ set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "d0edc3af-4c50-42ea-a356-e2862fe7a444")
 
 #E:\vs2026\VC\Tools\MSVC\14.50.35717\modules
 set(LIBCXX_MODULE_DIRS "E:/vs2026/VC/Tools/MSVC/14.50.35717/modules")
-
-message(STATUS "MSVC: 启用 UTF-8 编码支持 (/utf-8)")
 include(CMakeDependentOption)
 
 
