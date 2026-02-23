@@ -131,12 +131,16 @@ if (VULKAN_HEADERS_ENABLE_INSTALL)
         set_target_properties(Vulkan-HppModule PROPERTIES EXPORT_NAME "HppModule")
         install(TARGETS Vulkan-HppModule
             EXPORT VulkanHeadersConfig
+            FILE_SET CXX_MODULES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
             RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
             ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}")
+            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        )
         install(EXPORT VulkanHeadersConfig
             NAMESPACE "Vulkan::"
-            DESTINATION "share/cmake/VulkanHeaders")
+            DESTINATION "share/cmake/VulkanHeaders"
+            CXX_MODULES_DIRECTORY ${CMAKE_INSTALL_INCLUDEDIR}
+        )
     else()
         install(EXPORT VulkanHeadersConfig
             NAMESPACE "Vulkan::"
