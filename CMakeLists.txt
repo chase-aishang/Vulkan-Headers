@@ -7,9 +7,6 @@
 # ~~~
 cmake_minimum_required(VERSION 4.1.0)
 
-#E:\Development\Vcpkg G:\Vcpkg\scripts\buildsystems
-set(CMAKE_TOOLCHAIN_FILE "E:/Development/Vcpkg/scripts/buildsystems/vcpkg.cmake")
-
 set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
@@ -18,7 +15,6 @@ message(STATUS "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
 set(CMAKE_CXX_MODULE_STD 1)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# 启用C++20 Modules支持
 set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_EXTENSIONS ON)
